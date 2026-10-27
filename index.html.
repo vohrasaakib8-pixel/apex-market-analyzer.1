@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>APEX Market Analyzer</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #090e18;
+  --panel: #121b2b;
+  --border: #26354a;
+  --text: #edf3fc;
+  --muted: #92a3bb;
+  --green: #38d9a9;
+  --red: #ff6b78;
+  --gold: #ffc857;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px Arial, sans-serif;
+}
+header {
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.brand { font-size: 21px; font-weight: 800; }
+.brand span { color: var(--green); }
+.small { color: var(--muted); font-size: 12px; }
+main { max-width: 1100px; margin: auto; padding: 18px; }
+.notice {
+  background: #392c12;
+  color: #ffdb8c;
+  padding: 12px;
+  border-radius: 9px;
+  margin-bottom: 18px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 17px;
+  min-width: 0;
+}
+h2 { font-size: 15px; margin: 0 0 15px; }
+.price { font-size: 28px; font-weight: 700; margin: 12px 0; }
+.green { color: var(--green); }
+.red { color: var(--red); }
+.gold { color: var(--gold); }
+label { color: var(--muted); display: block; margin: 12px 0 6px; }
+select, button {
+  background: #1b2940;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 11px;
+  font-size: 14px;
+}
+select { width: 100%; }
+button { cursor: pointer; }
+button:focus, select:focus { outline: 2px solid var(--green); }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+.stat {
+  padding: 10px;
+  background: #0c1422;
+  border-radius: 8px;
+  overflow-wrap: anywhere;
+}
+.stat strong { display: block; margin-top: 8px; }
+.news-item {
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+.news-item:last-child { border-bottom: 0; }
+.tag {
+  display: inline-block;
+  padding: 4px 7px;
+  border-radius: 5px;
+  font-size: 11px;
+  margin-right: 7px;
+}
+.high { background: #4b202a; color: #ff9da7; }
+.medium { background: #493919; color: #ffdb8c; }
+.low { background: #153d35; color: #8cebd0; }
+footer { color: var(--muted); text-align: center; padding: 25px; }
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  main { padding: 12px; }
+  header { padding: 16px; }
+  .price { font-size: 25px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">APEX <span>MARKET ANALYZER</span></div>
+    <div class="small">Market intelligence dashboard</div>
+  </div>
+  <span class="gold">● DEMO MODE</span>
+</header>
+
+<main>
+  <div class="notice">
+    Demo data only. Prices, analysis and news are not live.
+    Do not use this prototype to make trading decisions.
+  </div>
+
+  <div class="grid">
+    <section class="panel">
+      <h2>Market Overview</h2>
+      <label for="symbol">Trading symbol</label>
+      <select id="symbol">
+        <option value="EUR/USD">EUR/USD</option>
+        <option value="GBP/USD">GBP/USD</option>
+        <option value="USD/JPY">USD/JPY</option>
+        <option value="XAU/USD">Gold (XAU/USD)</option>
+        <option value="BTC/USD">Bitcoin (BTC/USD)</option>
+      </select>
+      <div class="small" style="margin-top:18px">Illustrative price</div>
+      <div class="price" id="price">1.08420</div>
+      <div class="green">Market preview</div>
+      <div class="stats">
+        <div class="stat"><span class="small">Trend</span><strong>Demo</strong></div>
+        <div class="stat"><span class="small">Session</span><strong>—</strong></div>
+        <div class="stat"><span class="small">Feed</span><strong>Offline</strong></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Trade Analysis</h2>
+      <label for="style">Trading style</label>
+      <select id="style">
+        <option>Scalping</option>
+        <option>Intraday</option>
+        <option>Swing Trading</option>
+      </select>
+      <label for="direction">Example direction</label>
+      <select id="direction">
+        <option>Neutral</option>
+        <option>Bullish</option>
+        <option>Bearish</option>
+      </select>
+      <div class="stats">
+        <div class="stat"><span class="small">Entry</span><strong>—</strong></div>
+        <div class="stat"><span class="small">Stop loss</span><strong>—</strong></div>
+        <div class="stat"><span class="small">Take profit</span><strong>—</strong></div>
+      </div>
+      <p class="small">Trade levels will appear after a real analysis engine is connected.</p>
+      <button id="analyze">View status</button>
+      <p id="status" role="status" class="small"></p>
+    </section>
+
+    <section class="panel">
+      <h2>News Impact</h2>
+      <p class="small">Illustrative events — not a live economic calendar.</p>
+      <div class="news-item">
+        <span class="tag high">HIGH</span>
+        <strong>Interest rate decision</strong>
+        <p class="small">USD · Example event · Time not verified</p>
+      </div>
+      <div class="news-item">
+        <span class="tag medium">MEDIUM</span>
+        <strong>Inflation report</strong>
+        <p class="small">EUR · Example event · Time not verified</p>
+      </div>
+      <div class="news-item">
+        <span class="tag low">LOW</span>
+        <strong>Economic sentiment</strong>
+        <p class="small">GBP · Example event · Time not verified</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Market Chart</h2>
+      <p class="small">
+        Chart integration will be added in the next stage.
+      </p>
+      <div style="height:130px;display:grid;place-items:center;
+        border:1px dashed #40516a;border-radius:8px;color:#92a3bb">
+        Chart not connected
+      </div>
+      <h2 style="margin-top:18px">Analysis History</h2>
+      <p class="small">No saved analyses yet. Database not connected.</p>
+    </section>
+  </div>
+</main>
+
+<footer>APEX Market Analyzer · Independent rebuild</footer>
+
+<script>
+const prices = {
+  "EUR/USD": "1.08420",
+  "GBP/USD": "1.27100",
+  "USD/JPY": "149.500",
+  "XAU/USD": "2650.00",
+  "BTC/USD": "67000.00"
+};
+
+document.getElementById("symbol").addEventListener("change", e => {
+  document.getElementById("price").textContent = prices[e.target.value];
+});
+
+document.getElementById("analyze").addEventListener("click", () => {
+  document.getElementById("status").textContent =
+    "Analysis unavailable: connect live market data and the analysis engine first.";
+});
+</script>
+</body>
+</html>
